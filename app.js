@@ -49,6 +49,7 @@ canvas.addEventListener('mouseout', () => {
 });
 
 canvas.addEventListener('touchstart', (e) => {
+    e.preventDefault();
     isDrawing = true;
     [lastX, lastY] = [e.offsetX, e.offsetY];
     const touch = e.touches[0];
@@ -56,6 +57,7 @@ canvas.addEventListener('touchstart', (e) => {
 });
 
 canvas.addEventListener('touchmove', (e) => {
+    e.preventDefault();
     const touch = e.touches[0];
     draw(touch);
 });
