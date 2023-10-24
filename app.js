@@ -21,10 +21,10 @@ function draw(e){
     ctx.beginPath();
     ctx.moveTo(lastX, lastY);
 
-    ctx.lineTo(e.pageX, e.pageY);
+    ctx.lineTo(e.clientX, e.clientY);
     ctx.stroke();
 
-    [lastX, lastY] = [e.pageX, e.pageY];
+    [lastX, lastY] = [e.clientX, e.clientY];
     hue++;
     if(hue >= 360) hue = 0;
 
@@ -47,19 +47,20 @@ canvas.addEventListener('mouseout', () => {
     isDrawing = false;
     ctx.lineWidth = 1;
 });
-window.addEventListener('touchmove', (e) => {
+
+canvas.addEventListener('touchstart', (e) => {
     isDrawing = true;
     [lastX, lastY] = [e.offsetX, e.offsetY];
-    // Get the list of touches
-    let touches = e.touches;
-    
-    // Iterate through the touches
-    for (let i = 0; i < touches.length; i++) {
-        let touch = touches[i];
-        draw(touch);
-    }
+    const touch = e.touches[0];
+    draw(touch);
 });
-window.addEventListener('touchend', () => {
+
+canvas.addEventListener('touchmove', (e) => {
+    const touch = e.touches[0];
+    draw(touch);
+});
+
+canvas.addEventListener('touchend', () => {
     isDrawing = false;
     ctx.lineWidth = 1;
 });
